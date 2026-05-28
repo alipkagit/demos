@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-label="Peak expiratory flow normal-value curves">
+  <rect x="0" y="0" width="360" height="240" fill="#ffffff"/>
+  <g font-family="'IBM Plex Sans', sans-serif" font-size="11" fill="#6b6259">
+    <text x="14" y="20" font-weight="600" fill="#3a332e">Normal PEF values (L/min)</text>
+    <!-- axes -->
+    <g stroke="#cdbfa9" stroke-width="1.5">
+      <path d="M50 200 L340 200"/>
+      <path d="M50 40 L50 200"/>
+    </g>
+    <!-- gridlines -->
+    <g stroke="#eee5d6" stroke-width="1">
+      <path d="M50 70 L340 70"/>
+      <path d="M50 110 L340 110"/>
+      <path d="M50 150 L340 150"/>
+    </g>
+    <!-- y labels -->
+    <text x="20" y="74">650</text>
+    <text x="20" y="114">550</text>
+    <text x="20" y="154">450</text>
+    <text x="20" y="204">350</text>
+    <!-- x labels -->
+    <text x="46" y="216">20</text>
+    <text x="186" y="216">45</text>
+    <text x="326" y="216">80</text>
+    <text x="170" y="234" fill="#3a332e">Age (years)</text>
+    <!-- men curve -->
+    <path d="M55 92 Q150 70 230 92 T335 138" fill="none" stroke="#2f6f6a" stroke-width="3"/>
+    <text x="250" y="80" fill="#2f6f6a" font-weight="600">Men</text>
+    <!-- women curve -->
+    <path d="M55 132 Q150 116 230 132 T335 170" fill="none" stroke="#d8443a" stroke-width="3"/>
+    <text x="250" y="160" fill="#d8443a" font-weight="600">Women</text>
+  </g>
+</svg>

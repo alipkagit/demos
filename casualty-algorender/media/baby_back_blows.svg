@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-label="Back blows on a baby along the forearm">
+  <g fill="none" stroke="#3a332e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- rescuer forearm as a diagonal support bar -->
+    <path d="M70 170 L240 96" stroke="#cdbfa9" stroke-width="10"/>
+    <!-- baby lying face down along forearm, head low (left) -->
+    <circle cx="92" cy="150" r="14" fill="#f3ece1"/>
+    <path d="M104 144 L196 110"/>
+    <!-- baby legs -->
+    <path d="M196 110 L214 104"/>
+    <path d="M190 118 L210 116"/>
+    <!-- strike arrow on the back -->
+    <path d="M150 64 L146 104" stroke="#d8443a"/>
+    <path d="M138 94 L146 106 L154 94" stroke="#d8443a"/>
+  </g>
+</svg>

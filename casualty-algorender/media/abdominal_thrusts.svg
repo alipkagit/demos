@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-label="Abdominal thrusts from behind">
+  <g fill="none" stroke="#3a332e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- standing person facing right -->
+    <circle cx="196" cy="58" r="17" fill="#f3ece1"/>
+    <path d="M196 75 L196 150"/>
+    <!-- legs -->
+    <path d="M196 150 L182 200"/>
+    <path d="M196 150 L210 200"/>
+    <!-- rescuer arms wrapping around the waist from behind -->
+    <path d="M150 120 q34 26 60 0" stroke="#d8443a"/>
+    <!-- fist marker above the navel -->
+    <circle cx="196" cy="126" r="9" fill="#d8443a" stroke="none"/>
+    <!-- in-and-up motion arrow -->
+    <path d="M150 168 Q176 150 192 134" stroke="#d8443a"/>
+    <path d="M180 132 L194 132 L194 146" stroke="#d8443a"/>
+    <!-- ground -->
+    <path d="M120 206 L240 206" stroke="#cdbfa9" stroke-width="4"/>
+  </g>
+</svg>
