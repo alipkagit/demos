@@ -210,6 +210,28 @@
 
   .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:#171310;color:#fff;font-size:13.5px;font-weight:600;padding:12px 18px;border-radius:999px;z-index:90;opacity:0;transition:all .25s ease;pointer-events:none;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* CPR COACH */
+  .coach{margin-top:4px}
+  .coach-stat{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-bottom:8px;gap:6px}
+  .coach-stat b{color:var(--ink);font-size:14px}
+  .metro{position:relative;width:196px;height:196px;margin:8px auto 2px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--sev-critical-bg);border:3px solid var(--sev-critical);color:var(--sev-critical);transition:transform .08s ease;cursor:pointer;user-select:none}
+  .metro.beat{transform:scale(1.07)}
+  .metro.breaths{background:var(--sev-info-bg);border-color:var(--accent);color:var(--accent)}
+  .metro .mnum{font-family:var(--font-mono);font-weight:600;font-size:62px;line-height:1}
+  .metro .mlbl{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;margin-top:5px}
+  .metro .msub{font-size:12px;color:var(--muted);margin-top:3px;font-family:var(--font-sans);font-weight:500}
+  .coach-tech{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;margin-top:10px;font-size:13px;line-height:1.4}
+  .coach-tech .row{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line)}
+  .coach-tech .row:first-child{border-top:0}
+  .coach-tech .k{flex:0 0 52px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding-top:2px}
+  .coach-note{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45;background:var(--sev-info-bg);border-radius:10px;padding:9px 11px}
+  .coach-ctrls{display:flex;gap:9px;margin-top:12px}
+  .coach-ctrls button{border:0;border-radius:13px;padding:14px;font-family:var(--font-sans);font-size:15px;font-weight:700;cursor:pointer}
+  .cbtn-go{flex:1;background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 20px -10px var(--accent)}
+  .cbtn-sec{flex:0 0 auto;background:var(--chip);color:var(--ink);padding:14px 18px}
+  .coach-sound{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:10px;font-size:12.5px;color:var(--muted);cursor:pointer;user-select:none}
+  .coach-sound input{accent-color:var(--accent)}
 </style>
 </head>
 <body class="theme-public">
@@ -257,9 +279,9 @@
     "ask":{"id":"ask","type":"decision","title":"Ask: “Are you choking?”","prompt":"Can they cough, speak or breathe?","branches":[{"label":"Yes — they can cough or breathe","goto":"encourage","severity":"safe"},{"label":"No — silent, cannot breathe","goto":"back_blows","severity":"severe"}]},
     "encourage":{"id":"encourage","type":"action","title":"Encourage them to keep coughing","severity":"safe","body":["Tell them to keep coughing","Do not do anything else — do not hit the back or give thrusts","Stay with them until they breathe normally again"],"next":"watch"},
     "watch":{"id":"watch","type":"decision","title":"Keep watching","prompt":"How are they now?","branches":[{"label":"Breathing normally again","goto":"out_recovered","severity":"safe"},{"label":"Getting worse — cannot cough or breathe","goto":"back_blows","severity":"severe"}]},
-    "back_blows":{"id":"back_blows","type":"action","title":"Give 5 blows to the back","severity":"severe","body":["Stand to the side and slightly behind them","Support the chest with one hand and bend them well forward","Give up to 5 sharp blows between the shoulder blades with the heel of your hand","Check after each blow — stop as soon as the object comes out"],"contextBody":{"baby":["Lay the baby face down along your forearm, head low","Support the head and give up to 5 firm blows on the back with the heel of your hand","Check after each blow — stop as soon as the object comes out"]},"media":{"type":"image","src":"media/back_blows.svg","alt":"Giving back blows to a person bent forward","caption":"Support the chest, bend forward, strike between the shoulder blades."},"refs":["back_blows"],"next":"check1"},
+    "back_blows":{"id":"back_blows","type":"action","title":"Give 5 blows to the back","severity":"severe","body":["Stand to the side and slightly behind them","Support the chest with one hand and bend them well forward","Give up to 5 sharp blows between the shoulder blades with the heel of your hand","Check after each blow — stop as soon as the object comes out"],"contextBody":{"baby":["Lay the baby face down along your forearm, head low","Support the head and give up to 5 firm blows on the back with the heel of your hand","Check after each blow — stop as soon as the object comes out"]},"media":{"type":"image","src":"media/back_blows.png","alt":"Giving back blows to a person bent forward","caption":"Support the chest, bend forward, strike between the shoulder blades."},"refs":["back_blows"],"next":"check1"},
     "check1":{"id":"check1","type":"decision","title":"Did the object come out?","prompt":"Can they speak, cough or breathe now?","branches":[{"label":"Yes — it cleared","goto":"out_cleared","severity":"safe"},{"label":"No — still choking","goto":"abd_thrusts","severity":"severe"}]},
-    "abd_thrusts":{"id":"abd_thrusts","type":"action","title":"Give 5 abdominal thrusts","severity":"severe","body":["Stand behind them and wrap both arms around the waist","Make a fist and place it between the belly button and the lower tip of the breastbone","Grip your fist with the other hand","Bend them forward and pull sharply inwards and upwards — up to 5 times"],"contextBody":{"baby":["Use CHEST thrusts, not abdominal thrusts","Place two fingers in the middle of the chest","Push sharply inwards and upwards towards the head — up to 5 times"]},"media":{"type":"image","src":"media/abdominal_thrusts.svg","alt":"Giving abdominal thrusts from behind","caption":"Fist above the navel, grip with the other hand, pull in and up."},"warning":"Abdominal and chest thrusts can cause internal injuries. Anyone given thrusts must be seen by a doctor afterwards.","refs":["abd_thrusts"],"next":"check2"},
+    "abd_thrusts":{"id":"abd_thrusts","type":"action","title":"Give 5 abdominal thrusts","severity":"severe","body":["Stand behind them and wrap both arms around the waist","Make a fist and place it between the belly button and the lower tip of the breastbone","Grip your fist with the other hand","Bend them forward and pull sharply inwards and upwards — up to 5 times"],"contextBody":{"baby":["Use CHEST thrusts, not abdominal thrusts","Place two fingers in the middle of the chest","Push sharply inwards and upwards towards the head — up to 5 times"]},"media":{"type":"image","src":"media/abdominal_thrusts.png","alt":"Giving abdominal thrusts from behind","caption":"Fist above the navel, grip with the other hand, pull in and up."},"warning":"Abdominal and chest thrusts can cause internal injuries. Anyone given thrusts must be seen by a doctor afterwards.","refs":["abd_thrusts"],"next":"check2"},
     "check2":{"id":"check2","type":"decision","title":"Did the object come out?","prompt":"Can they speak, cough or breathe now?","branches":[{"label":"Yes — it cleared","goto":"out_cleared","severity":"safe"},{"label":"No — still choking","goto":"still_conscious","severity":"severe"}]},
     "still_conscious":{"id":"still_conscious","type":"decision","title":"Are they still conscious?","prompt":"Are they still awake and responding?","branches":[{"label":"Yes — keep going","goto":"alternate","severity":"severe"},{"label":"No — they have collapsed","goto":"collapsed","severity":"critical"}]},
     "alternate":{"id":"alternate","type":"action","title":"Alternate back blows and thrusts","severity":"severe","body":["Keep switching between 5 back blows and 5 abdominal thrusts","Check after each set","Send someone to call for an ambulance now if you have not already"],"links":[{"label":"Call an ambulance","action":"call"}],"next":"check2"},
@@ -267,12 +289,12 @@
     "breathing":{"id":"breathing","type":"decision","title":"Are they breathing?","prompt":"Look, listen and feel for normal breathing","branches":[{"label":"No — not breathing","goto":"out_cpr","severity":"critical"},{"label":"Yes — breathing","goto":"out_recovery","severity":"caution"}]},
     "out_recovered":{"id":"out_recovered","type":"outcome","title":"They have recovered","severity":"safe","body":["Stay with them until you are sure they are well","Seek medical advice if anything seems wrong"]},
     "out_cleared":{"id":"out_cleared","type":"outcome","title":"The object has cleared","severity":"safe","body":["Stay with them and watch their breathing","If abdominal or chest thrusts were used, they MUST be checked by a doctor"]},
-    "out_cpr":{"id":"out_cpr","type":"outcome","title":"Start CPR now","severity":"critical","body":["Begin chest compressions immediately and continue until help arrives"],"links":[{"label":"Open CPR guide","algorithm":"cpr_adult"},{"label":"Call an ambulance","action":"call"}]},
+    "out_cpr":{"id":"out_cpr","type":"outcome","title":"Start CPR now","severity":"critical","body":["Begin chest compressions immediately and continue until help arrives"],"links":[{"label":"Open CPR guide","algorithm":"cpr"},{"label":"Call an ambulance","action":"call"}]},
     "out_recovery":{"id":"out_recovery","type":"outcome","title":"Place in the recovery position","severity":"caution","body":["Roll them onto their side, head tilted back so the airway stays open","Keep watching their breathing until help arrives"],"links":[{"label":"Open Recovery Position guide","algorithm":"recovery_position"},{"label":"Call an ambulance","action":"call"}]}
   },
   "references":{
-    "back_blows":{"id":"back_blows","kind":"procedure","title":"Technique: Blows to the back","variants":{"over1":{"label":"Adult or child (over 1 year)","steps":["Stand to the side and a little behind the person","Support the chest with one hand and bend them well forward, so a dislodged object falls out rather than deeper in","Give up to 5 sharp blows between the shoulder blades with the heel of your hand","Check after each blow whether the object has come out"],"media":{"type":"image","src":"media/back_blows.svg","alt":"Back blows on a person bent forward"}},"baby":{"label":"Baby (under 1 year)","steps":["Lay the baby face down along your forearm with the head low","Support the head and jaw with your hand","Give up to 5 firm blows on the back with the heel of your hand"],"media":{"type":"image","src":"media/baby_back_blows.svg","alt":"Back blows on a baby along the forearm"}}}},
-    "abd_thrusts":{"id":"abd_thrusts","kind":"procedure","title":"Technique: Abdominal / chest thrusts","warning":"Thrusts can cause serious internal injuries. Anyone given thrusts must be seen by a doctor.","variants":{"over1":{"label":"Adult or child (over 1 year) — abdominal thrusts","steps":["Stand behind the person and wrap both arms around the waist","Make a fist and place it between the belly button and the lower tip of the breastbone","Place the other hand on top, gripping the back of your fist and wrist","Bend the person forward and pull strongly towards you and upwards"],"media":{"type":"image","src":"media/abdominal_thrusts.svg","alt":"Abdominal thrusts from behind"}},"baby":{"label":"Baby (under 1 year) — chest thrusts","steps":["Place two fingers in the middle of the chest","Push sharply inwards and upwards towards the head","Give up to 5 chest thrusts, checking after each"],"media":{"type":"image","src":"media/baby_thrusts.svg","alt":"Chest thrusts on a baby"}}}}
+    "back_blows":{"id":"back_blows","kind":"procedure","title":"Technique: Blows to the back","variants":{"over1":{"label":"Adult or child (over 1 year)","steps":["Stand to the side and a little behind the person","Support the chest with one hand and bend them well forward, so a dislodged object falls out rather than deeper in","Give up to 5 sharp blows between the shoulder blades with the heel of your hand","Check after each blow whether the object has come out"],"media":{"type":"image","src":"media/back_blows.png","alt":"Back blows on a person bent forward"}},"baby":{"label":"Baby (under 1 year)","steps":["Lay the baby face down along your forearm with the head low","Support the head and jaw with your hand","Give up to 5 firm blows on the back with the heel of your hand"],"media":{"type":"image","src":"media/baby_back_blows.png","alt":"Back blows on a baby along the forearm"}}}},
+    "abd_thrusts":{"id":"abd_thrusts","kind":"procedure","title":"Technique: Abdominal / chest thrusts","warning":"Thrusts can cause serious internal injuries. Anyone given thrusts must be seen by a doctor.","variants":{"over1":{"label":"Adult or child (over 1 year) — abdominal thrusts","steps":["Stand behind the person and wrap both arms around the waist","Make a fist and place it between the belly button and the lower tip of the breastbone","Place the other hand on top, gripping the back of your fist and wrist","Bend the person forward and pull strongly towards you and upwards"],"media":{"type":"image","src":"media/abdominal_thrusts.png","alt":"Abdominal thrusts from behind"}},"baby":{"label":"Baby (under 1 year) — chest thrusts","steps":["Place two fingers in the middle of the chest","Push sharply inwards and upwards towards the head","Give up to 5 chest thrusts, checking after each"],"media":{"type":"image","src":"media/baby_thrusts.png","alt":"Chest thrusts on a baby"}}}}
   }
 }
 </script>
@@ -305,20 +327,49 @@
 }
 </script>
 
+<script type="application/json" id="algo-cpr">
+{
+  "id":"cpr","title":"CPR","audience":"public","category":"Life-threatening","version":"0.1",
+  "sourcePdf":"First Aid Algorithms/CPR in Babies.pdf; CPR in Children.pdf; CPR-for-babies-under-12-months.pdf; First Aid for First Responders in Africa (pp. 49–52)",
+  "lastReviewed":"2023",
+  "disclaimer":"First-aid guidance for the public. It does not replace professional medical care or a hands-on CPR course. If in doubt, start chest compressions and call for help. Illustrative draft — not yet clinically reviewed by EMK.",
+  "description":"What to do when someone collapses and may not be breathing: check for danger, response and breathing, then give CPR. The guide adapts to an adult, a child (1 year to puberty) or a baby (under 1 year), and the coach keeps the compression rhythm for you.",
+  "contexts":[{"id":"age","type":"choice","label":"Who needs help?","options":[{"id":"adult","label":"Adult (from puberty)"},{"id":"child","label":"Child (1 yr – puberty)"},{"id":"baby","label":"Baby (under 1 yr)"}],"default":"adult"}],
+  "entry":"danger",
+  "nodes":{
+    "danger":{"id":"danger","type":"observe","title":"Check for danger","severity":"info","body":["Quickly check the area is safe for you and for them","Remove the danger if you can, or move them only if you must","Your own safety comes first — you cannot help if you are hurt too"],"contextMedia":{"baby":{"type":"image","src":"media/cpr_drs_danger.png","alt":"Rescuer checking the area around a baby for danger"}},"next":"response"},
+    "response":{"id":"response","type":"decision","title":"Check for a response","prompt":"Are they responding?","body":["Talk loudly: “Are you OK?”","Adult or child: tap or gently shake the shoulders","Baby: tap the sole of the foot or gently squeeze a shoulder","Look for eyes opening, movement, crying or any sound"],"contextMedia":{"baby":{"type":"image","src":"media/cpr_drs_response.png","alt":"Rescuer checking a baby for a response"}},"branches":[{"label":"Yes — they respond","goto":"out_responsive","severity":"safe"},{"label":"No — no response","goto":"shout","severity":"critical"}]},
+    "shout":{"id":"shout","type":"action","title":"Shout for help and call an ambulance","severity":"severe","body":["Shout for help so someone can assist you","Call for an ambulance now — put your phone on speaker so your hands are free","Send someone to find an AED (defibrillator) if one is nearby"],"contextBody":{"child":["Shout for help","If someone is with you, send them to call an ambulance and bring an AED","If you are completely alone, give 1 minute of CPR first, then call"],"baby":["Shout for help","If someone is with you, send them to call an ambulance and bring an AED","If you are completely alone, give 1 minute of CPR first, then call"]},"contextMedia":{"baby":{"type":"image","src":"media/cpr_drs_send.png","alt":"Call an ambulance"}},"links":[{"label":"Call an ambulance","action":"call"}],"next":"airway"},
+    "airway":{"id":"airway","type":"action","title":"Open the airway","severity":"severe","body":["Place one hand on the forehead and gently tilt the head back","Lift the chin with two fingertips","Look in the mouth and remove any blockage you can clearly see — do not sweep blindly"],"contextBody":{"baby":["Keep the head in a NEUTRAL position — do not tilt it back","Gently lift the chin","Look in the mouth and pick out anything visible with your little finger","Never push your finger blindly into the back of the throat"]},"contextMedia":{"baby":{"type":"image","src":"media/cpr_drs_airway.png","alt":"Checking and clearing a baby's airway"}},"next":"breathing"},
+    "breathing":{"id":"breathing","type":"decision","title":"Check for normal breathing","prompt":"Look, listen and feel — for no more than 10 seconds","body":["Look for the chest rising and falling","Listen for breathing sounds","Feel for breath on your cheek"],"warning":"Occasional gasps or noisy, irregular breaths are NOT normal breathing — treat them as ‘not breathing’ and start CPR.","contextMedia":{"baby":{"type":"image","src":"media/cpr_drs_breathing.png","alt":"Checking a baby for normal breathing"}},"branches":[{"label":"Breathing normally","goto":"out_recovery","severity":"caution"},{"label":"Not breathing / only gasping","goto":"cpr","severity":"critical"}]},
+    "cpr":{"id":"cpr","type":"cpr","title":"Give CPR","severity":"critical","coach":{"rate":110,"compressions":30,"breaths":2,"initialBreaths":0,"depth":"5–6 cm (about one third of the chest)","hands":"Heel of one hand on the centre of the chest, other hand on top, fingers interlocked, arms straight","breathsNote":"If you have a face shield or pocket mask, give 2 breaths after every 30 compressions. No barrier device? Hands-only compressions are fine — do not stop."},"contextCoach":{"child":{"initialBreaths":5,"depth":"about one third of the chest (no more than 6 cm)","hands":"One or two hands on the centre of the chest — whatever reaches the right depth","breathsNote":"Start with 5 rescue breaths, then give 2 breaths after every 30 compressions."},"baby":{"initialBreaths":5,"depth":"about one third of the chest","hands":"Two fingers on the centre of the chest, just below the nipple line","breathsNote":"Start with 5 rescue breaths, then give 2 breaths after every 30 compressions. Seal your mouth over the baby's mouth AND nose; blow gently."}},"media":{"type":"image","src":"media/cpr_adult_compress.png","alt":"Two interlocked hands giving chest compressions to an adult"},"contextMedia":{"child":{"type":"image","src":"media/cpr_child_compress.png","alt":"Giving chest compressions to a child"},"baby":{"type":"image","src":"media/cpr_baby_compress.png","alt":"Two-finger chest compressions on a baby"}},"refs":["rescue_breaths","hand_placement","aed"],"links":[{"label":"Call an ambulance","action":"call"}],"next":"signs"},
+    "signs":{"id":"signs","type":"decision","title":"Any signs of life?","prompt":"Only stop to check if they seem to wake, move or breathe normally.","body":["Do not interrupt compressions to recheck unless there are clear signs of life","Swap with another helper about every 2 minutes if you can, so you don't tire","If an AED arrives, switch it on and follow its spoken instructions"],"refs":["aed"],"branches":[{"label":"Yes — signs of life","goto":"out_recovery","severity":"safe"},{"label":"No — still not breathing","goto":"cpr","severity":"critical"}]},
+    "out_responsive":{"id":"out_responsive","type":"outcome","title":"They are responding","severity":"safe","body":["They do not need CPR right now","Check for and control any serious bleeding or injuries","Stay with them and keep watching their breathing","Get medical help if you are worried or they get worse"],"links":[{"label":"Call an ambulance","action":"call"}]},
+    "out_recovery":{"id":"out_recovery","type":"outcome","title":"Put them in the recovery position","severity":"caution","body":["Roll them onto their side","Tilt the head back so the airway stays open","Keep checking their breathing — be ready to start CPR again if it stops"],"contextBody":{"baby":["Cradle the baby on their side in your arms, head tilted slightly downwards","Keep checking their breathing and responsiveness","Be ready to start CPR again at any time"]},"contextMedia":{"baby":{"type":"image","src":"media/cpr_recovery.png","alt":"Holding a baby on their side in the recovery position"}},"links":[{"label":"Open Recovery Position guide","algorithm":"recovery_position"},{"label":"Call an ambulance","action":"call"}]}
+  },
+  "references":{
+    "rescue_breaths":{"id":"rescue_breaths","kind":"procedure","title":"Technique: Rescue breaths","warning":"Never delay or stop chest compressions to find a barrier device. If you have none and won't give breaths, do continuous compressions only.","variants":{"adult":{"label":"Adult — with a barrier device","steps":["Use a face shield or pocket mask if you have one","Tilt the head back and lift the chin to open the airway","Pinch the soft part of the nose closed","Take a normal breath and seal your lips around their mouth (or the mask)","Blow steadily for about 1 second — just enough to make the chest rise","Give 2 breaths after every 30 compressions"],"media":{"type":"image","src":"media/cpr_adult_breaths.png","alt":"Giving a rescue breath to an adult using a pocket mask"}},"child":{"label":"Child (1 yr – puberty)","steps":["Tilt the head back and lift the chin","Pinch the nose closed","Take a breath and seal your lips around their mouth","Blow gently for about 1 second until the chest rises","Give 5 breaths to begin, then 2 after every 30 compressions","Make up to 5 attempts to achieve 2 effective breaths"]},"baby":{"label":"Baby (under 1 yr)","steps":["Keep the head in a NEUTRAL position — do not tilt it back","Do NOT pinch the nose","Seal your mouth over the baby's mouth AND nose","Blow gently for about 1 second — just enough to see the chest rise","Give 5 breaths to begin, then 2 after every 30 compressions","If the chest doesn't rise: recheck the mouth for blockages and the head position"],"media":{"type":"image","src":"media/cpr_baby_head.png","alt":"Baby head positions: tilted too far back and forward are wrong; neutral is correct"}}}},
+    "hand_placement":{"id":"hand_placement","kind":"procedure","title":"Technique: Hand position & compressions","variants":{"adult":{"label":"Adult","steps":["Kneel beside them","Put the heel of one hand on the centre of the chest (lower half of the breastbone)","Place your other hand on top and interlock your fingers","Keep your arms straight, shoulders directly over your hands","Press down 5–6 cm, then let the chest come all the way back up","Push hard and fast — about 2 presses every second"],"media":{"type":"image","src":"media/cpr_adult_compress.png","alt":"Two interlocked hands on the centre of an adult's chest"}},"child":{"label":"Child (1 yr – puberty)","steps":["Put the heel of one hand on the centre of the chest","Use one or two hands — whatever you need to press about one third of the chest depth","Keep your arm(s) straight; press and release fully","About 2 presses every second (100–120 per minute)"],"media":{"type":"image","src":"media/cpr_child_compress.png","alt":"Giving chest compressions to a child"}},"baby":{"label":"Baby (under 1 yr)","steps":["Put two fingers (index and middle) on the centre of the chest, just below the nipple line","Press straight down about one third of the chest depth","Let the chest come all the way back up between presses","About 2 presses every second (100–120 per minute)"],"media":{"type":"image","src":"media/cpr_baby_compress.png","alt":"Two-finger chest compressions on a baby"}}}},
+    "aed":{"id":"aed","kind":"procedure","title":"Using an AED (defibrillator)","warning":"Don't delay or stop CPR to look for an AED — send someone else. Keep doing compressions until it is switched on and ready.","steps":["Switch the AED on as soon as it arrives and follow its spoken instructions","Bare the chest and wipe it dry","Stick the pads on as shown on each pad: one upper-right below the collarbone, one on the left side below the armpit","Make sure nobody is touching them, then let the AED check the heart","If it advises a shock: make sure everyone is clear, then press the flashing button","Carry on with CPR straight away, following the AED's prompts"],"note":"An AED is safe for untrained people — it will not deliver a shock to someone who doesn't need one."}
+  }
+}
+</script>
+
 <script>
 "use strict";
 const ALGOS = {
   choking: JSON.parse(document.getElementById('algo-choking').textContent),
+  cpr:     JSON.parse(document.getElementById('algo-cpr').textContent),
   asthma:  JSON.parse(document.getElementById('algo-asthma').textContent)
 };
-const ORDER = ['choking','asthma'];
+const ORDER = ['choking','cpr','asthma'];
 
-const app = { audience:'public', algoId:null, mode:'guide', nodeId:null, history:[], ctx:{}, openSheet:null };
+const app = { audience:'public', algoId:null, mode:'guide', nodeId:null, history:[], ctx:{}, openSheet:null, coach:null };
 
 const SEV = ['info','safe','caution','severe','critical'];
 const TYPE_META = {
   observe:{label:'Assess'}, decision:{label:'Decide'}, action:{label:'Do'},
-  reassess:{label:'Reassess'}, outcome:{label:'Outcome'}
+  reassess:{label:'Reassess'}, outcome:{label:'Outcome'}, cpr:{label:'CPR Coach'}
 };
 function icon(type){
   const s='stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"';
@@ -328,6 +379,7 @@ function icon(type){
     case 'action': return `<svg viewBox="0 0 24 24"><path ${s} d="M5 12h13M13 6l6 6-6 6"/></svg>`;
     case 'reassess': return `<svg viewBox="0 0 24 24"><path ${s} d="M20 11a8 8 0 1 0-2 6m2 2v-5h-5"/></svg>`;
     case 'outcome': return `<svg viewBox="0 0 24 24"><path ${s} d="M5 21V4h13l-2 4 2 4H5"/></svg>`;
+    case 'cpr': return `<svg viewBox="0 0 24 24"><path ${s} d="M2 12h4l2-6 4 12 2-6h8"/></svg>`;
     default: return '';
   }
 }
@@ -351,6 +403,7 @@ function home(){ app.algoId=null; closeSheet(true); render(); }
 
 /* ---------- top-level render ---------- */
 function render(){
+  stopCoach();
   const scr=$('screen');
   if(!app.algoId){ scr.innerHTML=renderHome(); bindHome(); $('callbar').style.display='none'; return; }
   const al=ALGOS[app.algoId];
@@ -359,6 +412,8 @@ function render(){
   scr.innerHTML = html;
   $('callbar').style.display = (al.audience==='public') ? 'block' : 'none';
   bindAlgo(al);
+  const cur=al.nodes[app.nodeId];
+  if(app.mode==='guide' && cur && cur.type==='cpr') initCoach(cur);
   scr.scrollTop=0;
 }
 
@@ -383,7 +438,7 @@ function renderHome(){
   return `<div class="eyebrow">${app.audience==='public'?'Self-care & first aid':'Clinical protocols'}</div>
     <h1 class="title">What's happening?</h1>
     <p class="sub">${intro}</p>${cards}
-    <p class="sub" style="margin-top:8px;opacity:.8">Two of 87 algorithms shown in this prototype.</p>`;
+    <p class="sub" style="margin-top:8px;opacity:.8">${list.length} of ~87 algorithms shown in this prototype.</p>`;
 }
 function bindHome(){ document.querySelectorAll('[data-open]').forEach(c=>c.onclick=()=>openAlgo(c.dataset.open)); }
 
@@ -442,6 +497,10 @@ function bodyFor(node){
   if(node.contextBody && node.contextBody[app.ctx.age]) return node.contextBody[app.ctx.age];
   return node.body||[];
 }
+function mediaFor(node){
+  if(node.contextMedia && node.contextMedia[app.ctx.age]) return node.contextMedia[app.ctx.age];
+  return node.media;
+}
 function nodeInner(al,node,opts){
   opts=opts||{};
   let h='';
@@ -449,7 +508,8 @@ function nodeInner(al,node,opts){
   if(body.length) h+=`<ul class="body">`+body.map(b=>`<li>${esc(b)}</li>`).join('')+`</ul>`;
   h+=renderDosing(node);
   if(node.warning) h+=`<div class="warn">${icon('outcome')}<span>${esc(node.warning)}</span></div>`;
-  if(opts.media!==false && node.media) h+=mediaBlock(node.media);
+  const _m=mediaFor(node);
+  if(opts.media!==false && _m) h+=mediaBlock(_m);
   // chips: refs + links
   let chips=[];
   (node.refs||[]).forEach(r=>{ const ref=al.references[r]; if(ref) chips.push(`<button class="chip" data-ref="${r}">${icon('observe')} ${esc(ref.title)}</button>`); });
@@ -488,6 +548,10 @@ function renderMap(al){
           ${loop?`<div class="loopnote">↩ loops back to “${esc(al.nodes[b.goto].title)}”</div>`:''}</div>
           <span class="arr">→</span></div>`;
       }).join('')+`</div>`;
+    } else if(n.type==='cpr'){
+      const c=coachCfg(n);
+      const init=c.initialBreaths>0?`${c.initialBreaths} initial breaths, then `:'';
+      html+=`<div style="margin-top:6px" class="prompt">${init}${c.compressions} compressions : ${c.breaths} breaths · 100–120/min · depth ${esc(c.depth)}</div>`;
     } else if(n.dosing){ html+=`<div style="margin-top:6px">${renderDosing(n)}</div>`; }
     html+=`</div>`;
   });
@@ -501,6 +565,14 @@ function renderGuide(al){
   const step=app.history.length+1;
   const dots=Array.from({length:Math.min(step,7)},(_,k)=>`<i class="${k<step?'on':''}"></i>`).join('');
   let h=`<div class="progress"><span class="pn">Step ${step}</span><div class="track">${dots}</div></div>`;
+  if(n.type==='cpr'){
+    h+=renderCoach(al,n);
+    h+=`<div class="gnav">`;
+    if(n.next) h+=`<button class="gbtn primary" data-go="${n.next}"><span>Stop — check for signs of life</span><span class="arr">›</span></button>`;
+    if(app.history.length) h+=`<button class="gbtn restart" data-back="1"><span>‹ Back</span><span></span></button>`;
+    h+=`</div>`;
+    return h;
+  }
   h+=`<div class="node sev-${n.severity||'info'}">
     <div class="ntag"><span class="ico">${icon(n.type)}</span><span class="tt">${TYPE_META[n.type].label}</span></div>
     <h2>${esc(n.title)}</h2>${n.prompt?`<p class="prompt">${esc(n.prompt)}</p>`:''}
@@ -518,6 +590,132 @@ function renderGuide(al){
   if(app.history.length) h+=`<button class="gbtn restart" data-back="1"><span>‹ Back</span><span></span></button>`;
   h+=`</div>`;
   return h;
+}
+
+/* ---------- CPR COACH ---------- */
+let _audioCtx=null;
+function coachCfg(n){
+  const b=Object.assign({rate:110,compressions:30,breaths:2,initialBreaths:0,depth:'',hands:'',breathsNote:''}, n.coach||{});
+  const ov=(n.contextCoach||{})[app.ctx.age];
+  return Object.assign(b, ov||{});
+}
+function renderCoach(al,n){
+  const c=coachCfg(n);
+  const med=mediaFor(n);
+  let chips=[];
+  (n.refs||[]).forEach(r=>{ const ref=al.references[r]; if(ref) chips.push(`<button class="chip" data-ref="${r}">${icon('observe')} ${esc(ref.title)}</button>`); });
+  (n.links||[]).forEach(l=>{ if(l.action==='call') chips.push(`<button class="chip call" data-call="1">${callIco()} ${esc(l.label)}</button>`); });
+  const startLabel=c.initialBreaths>0?`Start — ${c.initialBreaths} rescue breaths`:'Start CPR';
+  return `<div class="node sev-critical">
+    <div class="ntag"><span class="ico">${icon('cpr')}</span><span class="tt">${TYPE_META.cpr.label}</span></div>
+    <h2>${esc(n.title)}</h2>
+    <div class="coach">
+      <div class="coach-stat"><span>Cycles <b id="cCycle">0</b></span><span>Total <b id="cTotal">0</b></span><span id="cTimer">0:00</span></div>
+      <div class="metro" id="cMetro">
+        <div class="mnum" id="cNum">${c.compressions}</div>
+        <div class="mlbl" id="cLbl">ready</div>
+        <div class="msub" id="cSub">push ~${c.rate}/min</div>
+      </div>
+      <div class="coach-tech">
+        <div class="row"><span class="k">Hands</span><div>${esc(c.hands)}</div></div>
+        <div class="row"><span class="k">Depth</span><div>${esc(c.depth)}</div></div>
+        <div class="row"><span class="k">Rate</span><div>About 2 pushes a second — push hard, let the chest come all the way back up</div></div>
+      </div>
+      ${c.breathsNote?`<div class="coach-note">${esc(c.breathsNote)}</div>`:''}
+      ${med?mediaBlock(med):''}
+      <div class="coach-ctrls">
+        <button class="cbtn-go" id="cStart">${startLabel}</button>
+        <button class="cbtn-sec" id="cStop">Reset</button>
+      </div>
+      <label class="coach-sound"><input type="checkbox" id="cSound" checked> Metronome sound</label>
+      ${chips.length?`<div class="chips">${chips.join('')}</div>`:''}
+    </div>
+  </div>`;
+}
+function fmtT(s){ s=Math.floor(s); const m=Math.floor(s/60); const ss=s%60; return m+':'+(ss<10?'0':'')+ss; }
+function coachTick(){
+  if(!app.coach||!app.coach.sound) return;
+  try{ _audioCtx=_audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=_audioCtx.createOscillator(), g=_audioCtx.createGain();
+    o.frequency.value=1100; g.gain.value=0.07; o.connect(g); g.connect(_audioCtx.destination);
+    o.start(); g.gain.exponentialRampToValueAtTime(0.0001,_audioCtx.currentTime+0.05); o.stop(_audioCtx.currentTime+0.06);
+  }catch(e){}
+}
+function stopCoach(){
+  const co=app.coach; if(!co) return;
+  if(co.beat) clearInterval(co.beat);
+  if(co.tmr) clearInterval(co.tmr);
+  if(co.breathTO) clearTimeout(co.breathTO);
+  app.coach=null;
+}
+function setC(id,v){ const e=$(id); if(e) e.textContent=v; }
+function setStartLabel(t){ setC('cStart',t); }
+function setMetroMode(mode){ const m=$('cMetro'); if(m) m.classList.toggle('breaths', mode==='breaths'); }
+function pulse(){ const m=$('cMetro'); if(!m) return; m.classList.add('beat'); setTimeout(()=>{const x=$('cMetro'); if(x)x.classList.remove('beat');},80); }
+function initCoach(n){
+  stopCoach();
+  const c=coachCfg(n);
+  app.coach={cfg:c, phase:'ready', count:0, total:0, cycle:0, accum:0, t0:0, sound:true, beat:null, tmr:null, breathTO:null, prevPhase:null};
+  const sb=$('cStart'); if(sb) sb.onclick=coachStartPause;
+  const st=$('cStop'); if(st) st.onclick=coachReset;
+  const sn=$('cSound'); if(sn) sn.onchange=()=>{ if(app.coach) app.coach.sound=sn.checked; };
+  const mt=$('cMetro'); if(mt) mt.onclick=coachMetroTap;
+}
+function startTimerLoop(){
+  const co=app.coach; if(!co) return; if(co.tmr) clearInterval(co.tmr);
+  co.tmr=setInterval(()=>{ const c=app.coach; if(!c) return;
+    const el=c.accum + (c.t0?(Date.now()-c.t0)/1000:0); setC('cTimer',fmtT(el));
+  },400);
+}
+function freezeElapsed(){ const co=app.coach; if(co&&co.t0){ co.accum+=(Date.now()-co.t0)/1000; co.t0=0; } }
+function enterCompressions(){
+  const co=app.coach; if(!co) return; co.phase='compressions';
+  setMetroMode('compressions'); setStartLabel('Pause');
+  setC('cLbl','compressions'); setC('cSub','of '+co.cfg.compressions); setC('cNum', co.count);
+  if(co.beat) clearInterval(co.beat);
+  co.beat=setInterval(beatTick, 60000/co.cfg.rate);
+}
+function beatTick(){
+  const co=app.coach; if(!co) return;
+  co.count++; co.total++; pulse(); coachTick();
+  setC('cNum', co.count); setC('cTotal', co.total);
+  if(co.count>=co.cfg.compressions){ clearInterval(co.beat); co.beat=null; enterBreaths(co.cfg.breaths, false); }
+}
+function enterBreaths(nb, isInitial){
+  const co=app.coach; if(!co) return; co.phase=isInitial?'initial':'breaths';
+  setMetroMode('breaths'); setStartLabel('Pause');
+  setC('cNum', nb); setC('cLbl', isInitial?'rescue breaths':'breaths'); setC('cSub','tap circle when done');
+  const ms = isInitial ? Math.max(8000, nb*1800) : Math.max(5000, nb*2500);
+  if(co.breathTO) clearTimeout(co.breathTO);
+  co.breathTO=setTimeout(()=>endBreaths(isInitial), ms);
+}
+function endBreaths(isInitial){
+  const co=app.coach; if(!co) return;
+  if(co.breathTO){ clearTimeout(co.breathTO); co.breathTO=null; }
+  if(!isInitial){ co.cycle++; setC('cCycle', co.cycle); }
+  co.count=0; setC('cNum',0);
+  enterCompressions();
+}
+function coachStartPause(){
+  const co=app.coach; if(!co) return;
+  if(co.phase==='ready'){ co.t0=Date.now(); startTimerLoop(); if(co.cfg.initialBreaths>0) enterBreaths(co.cfg.initialBreaths,true); else enterCompressions(); return; }
+  if(co.phase==='paused'){ co.t0=Date.now(); startTimerLoop(); enterCompressions(); return; }
+  co.prevPhase=co.phase; co.phase='paused';
+  if(co.beat){ clearInterval(co.beat); co.beat=null; }
+  if(co.breathTO){ clearTimeout(co.breathTO); co.breathTO=null; }
+  freezeElapsed(); setStartLabel('Resume'); setC('cSub','paused');
+}
+function coachMetroTap(){
+  const co=app.coach; if(!co) return;
+  if(co.phase==='breaths'||co.phase==='initial') endBreaths(co.phase==='initial');
+}
+function coachReset(){
+  const al=ALGOS[app.algoId]; const n=al.nodes[app.nodeId]; const c=coachCfg(n);
+  initCoach(n);
+  setMetroMode('compressions');
+  setC('cNum', c.compressions); setC('cLbl','ready'); setC('cSub','push ~'+c.rate+'/min');
+  setC('cTimer','0:00'); setC('cTotal','0'); setC('cCycle','0');
+  setStartLabel(c.initialBreaths>0?('Start — '+c.initialBreaths+' rescue breaths'):'Start CPR');
 }
 
 /* ---------- bindings ---------- */
@@ -538,7 +736,7 @@ function bindAlgo(al){
 function bindContent(){
   document.querySelectorAll('[data-ref]').forEach(b=>b.onclick=e=>{e.stopPropagation();openRefSheet(b.dataset.ref);});
   document.querySelectorAll('[data-call]').forEach(b=>b.onclick=e=>{e.stopPropagation();toast('Calling emergency services… (prototype)');});
-  document.querySelectorAll('[data-link]').forEach(b=>b.onclick=e=>{e.stopPropagation();toast('Would open: '+b.dataset.llabel+' (not in this prototype)');});
+  document.querySelectorAll('[data-link]').forEach(b=>b.onclick=e=>{e.stopPropagation(); const id=b.dataset.link; if(id && ALGOS[id]){ closeSheet(true); openAlgo(id); } else { toast('Would open: '+b.dataset.llabel+' (not in this prototype)'); }});
 }
 function refreshDoses(){ // light re-render keeping focus on weight field
   const al=ALGOS[app.algoId];
