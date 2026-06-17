@@ -7,26 +7,25 @@
 <style>
   body{margin:0;background:#f4f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1a1a1a;padding:28px 16px}
   .wrap{max-width:1040px;margin:0 auto}
-  .intro{margin:0 auto 22px;color:#444;font-size:14px;line-height:1.5}
+  .intro{margin:0 auto 18px;color:#444;font-size:14px;line-height:1.5}
   .intro h1{font-size:21px;margin:0 0 6px}
-  .intro h2{font-size:16px;margin:26px 0 4px}
+  .intro h2{font-size:16px;margin:28px 0 4px}
   .intro b{color:#111}
   .note{background:#fff;border:1px solid #e3e3e3;border-left:4px solid #d9483b;border-radius:8px;padding:10px 13px;margin-top:10px;font-size:13px}
   .row3{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
-  .row2{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:flex-start;margin-top:8px}
   .col{width:262px}
   .vlabel{font-size:11px;font-weight:800;color:#888;text-align:center;margin-bottom:7px;text-transform:uppercase;letter-spacing:.08em}
 
-  /* generic card bits */
   .tag{display:inline-block;background:#fdeceb;color:#d9483b;font-size:9px;font-weight:800;letter-spacing:1.2px;padding:3px 7px;border-radius:6px}
   .h{font-size:18px;font-weight:700;margin:7px 0 2px}
   .circle{width:150px;height:150px;border-radius:50%;background:#fdeceb;margin:12px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;animation:beat 0.545s infinite;flex:none}
-  .circle.sm{width:128px;height:128px}
+  .circle.sm{width:120px;height:120px;margin:8px auto}
   @keyframes beat{0%{transform:scale(1)}12%{transform:scale(1.06)}30%{transform:scale(1)}}
   .circ-timer{color:#d9483b;font-size:38px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
-  .circle.sm .circ-timer{font-size:33px}
+  .circle.sm .circ-timer{font-size:31px}
   .circ-cap{color:#d9483b;font-size:9px;font-weight:800;letter-spacing:1.1px;margin-top:5px}
-  .guide{text-align:center;color:#555;font-size:12.5px;font-weight:600;line-height:1.45;margin:2px 0 6px}
+  .guide{text-align:center;color:#555;font-size:12.5px;font-weight:600;line-height:1.4;margin:2px 0 6px}
+  .guide.sm{font-size:11.5px}
   .guide .l2{color:#d9483b}
   .tech{background:#fafafa;border:1px solid #eee;border-radius:10px;font-size:11.5px;margin-top:8px}
   .tech .r{display:flex;gap:8px;padding:6px 9px;border-top:1px solid #eee}
@@ -35,27 +34,28 @@
   .breaths{background:#eef4fb;border:1px solid #dbe8f5;border-radius:10px;padding:8px 10px;margin-top:8px;font-size:11.5px;line-height:1.45;color:#33506e}
   .breaths.first{border-color:#bcd3ec;background:#e6f0fa}
   .breaths .bk{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#5b7fa6;font-weight:800;display:block;margin-bottom:3px}
-  .ctrls{display:flex;gap:8px;margin-top:11px}
+  /* compact breaths reminder in running view */
+  .breathmini{background:#eef4fb;border:1px solid #dbe8f5;border-radius:9px;padding:6px 9px;margin-top:8px;font-size:11.5px;color:#33506e;text-align:center;line-height:1.3}
+  .breathmini b{color:#23415f}
+  .breathmini .opt{color:#7a8aa0;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+  .miniline{text-align:center;color:#8a8a8a;font-size:11px;margin:6px 0 0}
+  .ctrls{display:flex;gap:8px;margin-top:10px}
   .ctrls .go{flex:1;background:#d9483b;color:#fff;border:0;border-radius:11px;padding:11px;font-weight:700;font-size:13.5px}
   .ctrls .sec{background:#f0f0f0;color:#444;border:0;border-radius:11px;padding:11px 15px;font-weight:700;font-size:13.5px}
-  .snd{display:flex;align-items:center;gap:7px;font-size:12px;color:#555;margin-top:11px;justify-content:center}
+  .snd{display:flex;align-items:center;gap:7px;font-size:12px;color:#555;margin-top:9px;justify-content:center}
   .snd input{width:16px;height:16px;accent-color:#d9483b}
-  .miniline{text-align:center;color:#888;font-size:11.5px;margin:4px 0 2px}
-
   .phone{background:#fff;border-radius:16px;border:1px solid #e6e6e6;border-left:5px solid #d9483b;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:14px}
 
-  /* ---- simulated older phone (360x640 dp) with app chrome ---- */
-  .device{width:300px;height:534px;background:#fff;border:6px solid #222;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 22px rgba(0,0,0,.18)}
-  .appbar{flex:none;height:42px;background:#d9483b;color:#fff;display:flex;align-items:center;padding:0 12px;font-weight:600;font-size:13px;gap:8px}
-  .toggle{flex:none;display:flex;gap:6px;padding:8px 12px 4px}
+  /* simulated older phone (small) with app chrome */
+  .device{width:292px;height:534px;background:#fff;border:6px solid #222;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+  .appbar{flex:none;height:40px;background:#d9483b;color:#fff;display:flex;align-items:center;padding:0 12px;font-weight:600;font-size:13px}
+  .toggle{flex:none;display:flex;gap:6px;padding:7px 12px 3px}
   .toggle div{flex:1;text-align:center;font-size:11px;font-weight:700;border:1px solid #ddd;border-radius:8px;padding:5px;color:#777}
   .toggle .on{background:#fdeceb;border-color:#d9483b;color:#d9483b}
   .scrollarea{flex:1;overflow:hidden;position:relative}
-  .scrollinner{padding:8px 12px 12px}
-  .fade{position:absolute;left:0;right:0;bottom:0;height:46px;background:linear-gradient(transparent,#fff);display:flex;align-items:flex-end;justify-content:center;font-size:10.5px;color:#b03}
-  .embar{flex:none;height:46px;background:#d9483b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;gap:6px}
-  .statebadge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#444;border-radius:20px;padding:4px 10px;margin-bottom:6px}
-  .statebadge.run{background:#1a8a4a}
+  .scrollinner{padding:8px 12px 10px}
+  .embar{flex:none;height:44px;background:#d9483b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  .statebadge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a8a4a;border-radius:20px;padding:3px 9px;margin-bottom:5px}
 </style>
 </head>
 <body>
@@ -63,11 +63,10 @@
 
   <div class="intro">
     <h1>CPR Coach — design mockup</h1>
-    <p>Three separate CPR algorithms. The red circle is a <b>metronome</b> (pulses at 110/min, with sound in the app); the number inside is a <b>timer</b> for how long CPR has run. No cycle/compression counters, no pauses — continuous compressions. Rescue breaths are concise optional guidance.</p>
-    <div class="note"><b>Ben's fix applied:</b> the babies blue "Breaths" box now holds only the breaths <b>sequence</b> (matching Children); the baby breathing <b>technique</b> (mouth-and-nose seal) moved into the gray technique table beside Hands &amp; Depth.</div>
+    <p>Three separate CPR algorithms. Red circle = <b>metronome</b> (pulses 110/min, with sound); number inside = <b>timer</b> of how long CPR has run. No cycle/compression counters, no pauses. The breaths <b>ratio is always shown</b> — including in the compact running view — so the guideline is never withheld.</p>
+    <div class="note"><b>This version adds:</b> a compact <b>"Breaths: 2 after every 30 compressions"</b> reminder just above Pause/Reset in the running view (marked <b>optional</b> for adults), so no screen omits the breaths guidance. Plus Ben's earlier fix (babies breath <i>technique</i> sits in the gray table, not the blue box).</div>
 
-    <h2>1 · The three cards (full "read" view)</h2>
-    <p>This is the <b>before-Start</b> view, where the rescuer reads and gets into position. Hands are still free, so scrolling here is fine.</p>
+    <h2>1 · Full "read" view (before Start — scrolling OK)</h2>
   </div>
 
   <div class="row3">
@@ -83,7 +82,6 @@
         <label class="snd"><input type="checkbox" checked> Metronome sound</label>
       </div>
     </div>
-
     <div class="col">
       <div class="vlabel">Children &gt; 1 yr</div>
       <div class="phone">
@@ -96,7 +94,6 @@
         <label class="snd"><input type="checkbox" checked> Metronome sound</label>
       </div>
     </div>
-
     <div class="col">
       <div class="vlabel">Babies &lt; 1 yr</div>
       <div class="phone">
@@ -112,48 +109,65 @@
   </div>
 
   <div class="intro">
-    <h2>2 · Fitting one screen during CPR (older phone, hands busy)</h2>
-    <p>Worst case = the <b>Babies</b> card. Below: the same algorithm inside a simulated <b>small older-Android screen</b> (with the app's top bar, Map/Guide toggle, and the bottom Emergency bar taking real estate). Left = <b>before Start</b> (content is taller than the screen → it scrolls, which is fine while reading). Right = <b>during CPR</b>, where the widget <b>collapses to essentials and fits with no scrolling</b>, keeping Pause + Reset always reachable.</p>
+    <h2>2 · During CPR — fits one small older-phone screen (no scroll), breaths ratio kept</h2>
+    <p>Each frame is a simulated small Android screen with the app's top bar, Map/Guide toggle and bottom Emergency bar. The widget collapses to essentials but <b>keeps the breaths reminder</b> just above Pause/Reset.</p>
   </div>
 
-  <div class="row2">
+  <div class="row3">
 
     <div>
-      <div class="vlabel">Before Start — scrolls (OK)</div>
+      <div class="vlabel">Adults — running</div>
       <div class="device">
-        <div class="appbar">‹ &nbsp; First Aid</div>
+        <div class="appbar">‹&nbsp; First Aid</div>
         <div class="toggle"><div>Map</div><div class="on">Guide</div></div>
-        <div class="scrollarea">
-          <div class="scrollinner">
-            <span class="statebadge">Ready</span>
-            <span class="tag">CPR</span><div class="h">CPR: Babies &lt; 1 yr</div>
-            <div class="breaths first"><span class="bk">Breaths — do these first</span>Start with 5 rescue breaths, then give 2 breaths after every 30 compressions.</div>
-            <div class="circle"><div class="circ-timer">0:00</div><div class="circ-cap">CPR TIME</div></div>
-            <div class="guide"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
-            <div class="tech"><div class="r"><span class="k">Hands</span><div>Two fingers (index &amp; middle) on centre of chest, between nipples; baby on a firm surface</div></div><div class="r"><span class="k">Depth</span><div>about one third of the chest</div></div></div>
-          </div>
-          <div class="fade">↓ scroll for breaths technique + Start</div>
-        </div>
+        <div class="scrollarea"><div class="scrollinner">
+          <span class="statebadge">● CPR running</span>
+          <div class="h" style="font-size:16px">CPR: Adults</div>
+          <div class="circle sm"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
+          <div class="guide sm"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
+          <div class="miniline">Heel of one hand · centre of chest · 5–6 cm</div>
+          <div class="breathmini"><span class="opt">Optional</span> &nbsp;<b>Breaths:</b> 2 after every 30 compressions</div>
+          <div class="ctrls"><button class="go">Pause</button><button class="sec">Reset</button></div>
+          <label class="snd"><input type="checkbox" checked> Metronome sound</label>
+        </div></div>
         <div class="embar">📞 Emergency Assistance</div>
       </div>
     </div>
 
     <div>
-      <div class="vlabel">During CPR — fits, no scroll</div>
+      <div class="vlabel">Children — running</div>
       <div class="device">
-        <div class="appbar">‹ &nbsp; First Aid</div>
+        <div class="appbar">‹&nbsp; First Aid</div>
         <div class="toggle"><div>Map</div><div class="on">Guide</div></div>
-        <div class="scrollarea">
-          <div class="scrollinner">
-            <span class="statebadge run">● CPR running</span>
-            <div class="h" style="font-size:16px">CPR: Babies &lt; 1 yr</div>
-            <div class="circle sm"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
-            <div class="guide"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
-            <div class="miniline">Two fingers · centre of chest · ⅓ depth</div>
-            <div class="ctrls"><button class="go">Pause</button><button class="sec">Reset</button></div>
-            <label class="snd"><input type="checkbox" checked> Metronome sound</label>
-          </div>
-        </div>
+        <div class="scrollarea"><div class="scrollinner">
+          <span class="statebadge">● CPR running</span>
+          <div class="h" style="font-size:16px">CPR: Children &gt; 1 yr</div>
+          <div class="circle sm"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
+          <div class="guide sm"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
+          <div class="miniline">One or two hands · centre of chest · ⅓ depth</div>
+          <div class="breathmini"><b>Breaths:</b> 2 after every 30 compressions</div>
+          <div class="ctrls"><button class="go">Pause</button><button class="sec">Reset</button></div>
+          <label class="snd"><input type="checkbox" checked> Metronome sound</label>
+        </div></div>
+        <div class="embar">📞 Emergency Assistance</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="vlabel">Babies — running</div>
+      <div class="device">
+        <div class="appbar">‹&nbsp; First Aid</div>
+        <div class="toggle"><div>Map</div><div class="on">Guide</div></div>
+        <div class="scrollarea"><div class="scrollinner">
+          <span class="statebadge">● CPR running</span>
+          <div class="h" style="font-size:16px">CPR: Babies &lt; 1 yr</div>
+          <div class="circle sm"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
+          <div class="guide sm"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
+          <div class="miniline">Two fingers · centre of chest · ⅓ depth</div>
+          <div class="breathmini"><b>Breaths:</b> 2 after every 30 compressions</div>
+          <div class="ctrls"><button class="go">Pause</button><button class="sec">Reset</button></div>
+          <label class="snd"><input type="checkbox" checked> Metronome sound</label>
+        </div></div>
         <div class="embar">📞 Emergency Assistance</div>
       </div>
     </div>
@@ -161,7 +175,7 @@
   </div>
 
   <div class="intro">
-    <div class="note"><b>The rule for the spec:</b> the <b>active (running) view must fit a small older-Android screen with no scrolling</b> — circle + timer + guidance + Pause/Reset + sound, all on-screen. The pre-Start view may scroll. On Start: collapse details, shrink the circle slightly, scroll to top. Optional one-line technique reminder ("Two fingers · ⅓ depth") if it still fits.</div>
+    <div class="note"><b>Spec rule:</b> no screen omits the breaths guideline. The running view always shows a one-line breaths-ratio reminder (from the 30:2 ratio) above Pause/Reset — marked <b>"Optional"</b> for adults (hands-only is acceptable), plain for children &amp; babies. The full sequence + technique remain in the pre-Start view. If vertical space is tight on the very smallest screens, the condensed technique line (grey) is the first thing to drop — the breaths reminder stays.</div>
   </div>
 
 </div>
