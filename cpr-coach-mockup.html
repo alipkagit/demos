@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPR Coach — design mockup (EMK Casualty)</title>
+<style>
+  body{margin:0;background:#f4f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1a1a1a;padding:28px 16px}
+  .intro{max-width:900px;margin:0 auto 22px;color:#444;font-size:14px;line-height:1.5}
+  .intro h1{font-size:20px;margin:0 0 6px}
+  .intro b{color:#111}
+  .note{background:#fff;border:1px solid #e3e3e3;border-left:4px solid #d9483b;border-radius:8px;padding:10px 13px;margin-top:10px;font-size:13px}
+  .row3{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+  .col{width:270px}
+  .vlabel{font-size:11px;font-weight:800;color:#888;text-align:center;margin-bottom:7px;text-transform:uppercase;letter-spacing:.08em}
+  .phone{background:#fff;border-radius:16px;border:1px solid #e6e6e6;border-left:5px solid #d9483b;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:15px}
+  .tag{display:inline-block;background:#fdeceb;color:#d9483b;font-size:9px;font-weight:800;letter-spacing:1.2px;padding:3px 7px;border-radius:6px}
+  .h{font-size:19px;font-weight:700;margin:8px 0 2px}
+  .circle{width:160px;height:160px;border-radius:50%;background:#fdeceb;margin:13px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;animation:beat 0.545s infinite}
+  @keyframes beat{0%{transform:scale(1)}12%{transform:scale(1.06)}30%{transform:scale(1)}}
+  .circ-timer{color:#d9483b;font-size:40px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+  .circ-cap{color:#d9483b;font-size:9px;font-weight:800;letter-spacing:1.1px;margin-top:5px}
+  .guide{text-align:center;color:#555;font-size:13px;font-weight:600;line-height:1.45;margin:2px 0 7px}
+  .guide .l2{color:#d9483b}
+  .tech{background:#fafafa;border:1px solid #eee;border-radius:10px;font-size:12px;margin-top:8px}
+  .tech .r{display:flex;gap:9px;padding:7px 10px;border-top:1px solid #eee}
+  .tech .r:first-child{border-top:0}
+  .tech .k{flex:0 0 46px;font-size:9px;letter-spacing:.04em;text-transform:uppercase;color:#999;font-weight:700;padding-top:2px}
+  .breaths{background:#eef4fb;border:1px solid #dbe8f5;border-radius:10px;padding:9px 11px;margin-top:9px;font-size:12px;line-height:1.45;color:#33506e}
+  .breaths.first{border-color:#bcd3ec;background:#e6f0fa}
+  .breaths .bk{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#5b7fa6;font-weight:800;display:block;margin-bottom:3px}
+  .ctrls{display:flex;gap:8px;margin-top:12px}
+  .ctrls .go{flex:1;background:#d9483b;color:#fff;border:0;border-radius:11px;padding:12px;font-weight:700;font-size:14px}
+  .ctrls .sec{background:#f0f0f0;color:#444;border:0;border-radius:11px;padding:12px 16px;font-weight:700;font-size:14px}
+  .snd{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#555;margin-top:12px;justify-content:center}
+  .snd input{width:16px;height:16px;accent-color:#d9483b}
+</style>
+</head>
+<body>
+  <div class="intro">
+    <h1>CPR Coach — design mockup</h1>
+    <p>Three separate CPR algorithms (Adults / Children &gt; 1&nbsp;yr / Babies &lt; 1&nbsp;yr). The red circle is a <b>metronome</b> — it pulses at 110/min (with sound in the app) and the number inside is a <b>timer</b> showing how long CPR has been running. No cycle/compression counters, no pauses — continuous compressions, per the latest guidance. Rescue breaths are kept as concise optional guidance.</p>
+    <div class="note"><b>This version fixes Ben's note:</b> the babies blue "Breaths" box now holds only the breaths sequence (matching Children). The baby-specific breathing <b>technique</b> (mouth-and-nose seal) has moved into the gray technique table, next to Hands and Depth — because it's a "how-to", like the other populations' technique.</div>
+  </div>
+
+  <div class="row3">
+
+    <div class="col">
+      <div class="vlabel">Adults</div>
+      <div class="phone">
+        <span class="tag">CPR</span>
+        <div class="h">CPR: Adults</div>
+        <div class="circle"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
+        <div class="guide"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
+        <div class="tech"><div class="r"><span class="k">Hands</span><div>Heel of one hand on centre of chest, other on top, fingers interlocked, arms straight</div></div><div class="r"><span class="k">Depth</span><div>5–6 cm</div></div></div>
+        <div class="breaths"><span class="bk">Breaths</span>Have a face shield/pocket mask? Give 2 breaths after every 30 compressions. No barrier? Hands-only is fine — don't stop.</div>
+        <div class="ctrls"><button class="go">Start CPR</button><button class="sec">Reset</button></div>
+        <label class="snd"><input type="checkbox" checked> Metronome sound</label>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="vlabel">Children &gt; 1 yr</div>
+      <div class="phone">
+        <span class="tag">CPR</span>
+        <div class="h">CPR: Children &gt; 1 yr</div>
+        <div class="breaths first"><span class="bk">Breaths — do these first</span>Start with 5 rescue breaths, then give 2 breaths after every 30 compressions.</div>
+        <div class="circle"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
+        <div class="guide"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
+        <div class="tech"><div class="r"><span class="k">Hands</span><div>One or two hands on the centre of the chest — whatever reaches the right depth</div></div><div class="r"><span class="k">Depth</span><div>about one third of the chest (no more than 6 cm)</div></div></div>
+        <div class="ctrls"><button class="go">Start CPR</button><button class="sec">Reset</button></div>
+        <label class="snd"><input type="checkbox" checked> Metronome sound</label>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="vlabel">Babies &lt; 1 yr</div>
+      <div class="phone">
+        <span class="tag">CPR</span>
+        <div class="h">CPR: Babies &lt; 1 yr</div>
+        <div class="breaths first"><span class="bk">Breaths — do these first</span>Start with 5 rescue breaths, then give 2 breaths after every 30 compressions.</div>
+        <div class="circle"><div class="circ-timer">1:24</div><div class="circ-cap">CPR TIME</div></div>
+        <div class="guide"><div>Push hard &amp; fast at the beep</div><div class="l2">Keep pauses &lt; 10s</div></div>
+        <div class="tech"><div class="r"><span class="k">Hands</span><div>Two fingers (index &amp; middle) on centre of chest, between nipples; baby on a firm surface</div></div><div class="r"><span class="k">Depth</span><div>about one third of the chest</div></div><div class="r"><span class="k">Breaths</span><div>Seal your mouth over the baby's mouth AND nose; blow gently for 1 second and watch the chest rise. Up to 5 attempts to get 2 effective breaths.</div></div></div>
+        <div class="ctrls"><button class="go">Start CPR</button><button class="sec">Reset</button></div>
+        <label class="snd"><input type="checkbox" checked> Metronome sound</label>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
