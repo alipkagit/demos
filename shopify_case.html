@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>Shopify: AI jako domyślny sposób pracy — studium przypadku dla Selsey</title>
+<style>
+  :root{
+    --paper:#F7F8F4;
+    --card:#FFFFFF;
+    --ink:#16211A;
+    --ink-2:#4A574E;
+    --ink-3:#71806F;
+    --spruce:#0A7A50;      /* mechanizmy Shopify */
+    --spruce-deep:#0B5C3D;
+    --spruce-wash:#E7F2EC;
+    --amber:#B4690E;       /* zastosowania u Selsey */
+    --amber-deep:#8A4E06;
+    --amber-wash:#F9EFDF;
+    --mist:#DDE4DC;
+    --mono:"Cascadia Mono","Consolas",ui-monospace,"SF Mono",Menlo,monospace;
+    --sans:"Segoe UI Variable Text","Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#141A16; --card:#1C231E;
+      --ink:#E9EEE8; --ink-2:#ADBBAC; --ink-3:#7E8C7D;
+      --spruce:#3FB183; --spruce-deep:#59C69A; --spruce-wash:#1B2E25;
+      --amber:#D9913B; --amber-deep:#E5A85F; --amber-wash:#2E2416;
+      --mist:#2B342C;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{max-width:1020px;margin:0 auto;padding:0 24px 96px}
+  a{color:var(--spruce);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--spruce);outline-offset:3px;border-radius:2px}
+
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);
+  }
+  header.hero{padding:72px 0 20px}
+  header.hero .eyebrow{display:block;margin-bottom:22px}
+  h1{
+    font-size:clamp(34px,5.4vw,54px);line-height:1.06;font-weight:750;
+    letter-spacing:-.022em;max-width:17ch;
+  }
+  h1 em{font-style:normal;color:var(--spruce)}
+  .lede{margin:26px 0 0;max-width:62ch;font-size:19px;color:var(--ink-2)}
+  .lede strong{color:var(--ink);font-weight:650}
+
+  section{margin-top:84px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--mist);padding-bottom:12px;margin-bottom:30px}
+  .sec-head h2{font-size:25px;font-weight:700;letter-spacing:-.014em}
+  .sec-head .eyebrow{margin-left:auto;text-align:right;flex-shrink:0}
+
+  /* ── memo artifact ── */
+  .memo{
+    background:var(--card);border:1px solid var(--mist);border-left:4px solid var(--spruce);
+    border-radius:6px;padding:30px 34px;font-family:var(--mono);
+    box-shadow:0 1px 0 var(--mist);
+  }
+  .memo .meta{font-size:12.5px;color:var(--ink-3);letter-spacing:.05em;line-height:2;border-bottom:1px dashed var(--mist);padding-bottom:14px;margin-bottom:20px}
+  .memo .meta b{color:var(--ink-2);font-weight:600}
+  .memo blockquote{font-size:clamp(17px,2.4vw,21px);line-height:1.55;color:var(--ink)}
+  .memo .pl{display:block;margin-top:14px;font-family:var(--sans);font-size:15.5px;color:var(--ink-2);font-style:italic}
+  .memo-note{margin-top:14px;font-size:14.5px;color:var(--ink-3);max-width:70ch}
+
+  /* ── rule cards ── */
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:14px;margin-top:26px}
+  .rule{background:var(--card);border:1px solid var(--mist);border-radius:6px;padding:22px 24px}
+  .rule .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--spruce);font-weight:600}
+  .rule h3{font-size:17.5px;font-weight:680;margin:10px 0 8px;letter-spacing:-.01em}
+  .rule p{font-size:15px;color:var(--ink-2)}
+  .rule p b{color:var(--ink)}
+
+  /* ── stat tiles ── */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .stat{background:var(--card);border:1px solid var(--mist);border-radius:6px;padding:24px 24px 20px}
+  .stat .num{font-size:clamp(30px,4vw,42px);font-weight:750;letter-spacing:-.03em;line-height:1;color:var(--spruce-deep);font-variant-numeric:tabular-nums}
+  .stat .lbl{margin-top:10px;font-size:15px;font-weight:640}
+  .stat .ctx{margin-top:4px;font-size:13.5px;color:var(--ink-3);line-height:1.5}
+
+  /* ── infra list ── */
+  .infra{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border:1px solid var(--mist);border-radius:6px;overflow:hidden;background:var(--card)}
+  .infra div{padding:22px 26px;border-top:1px solid var(--mist);border-left:1px solid var(--mist);margin-top:-1px;margin-left:-1px}
+  .infra h3{font-size:16.5px;font-weight:680;letter-spacing:-.01em}
+  .infra h3::before{content:"▸ ";color:var(--spruce)}
+  .infra p{margin-top:6px;font-size:14.5px;color:var(--ink-2)}
+
+  /* ── GSD pipeline ── */
+  .pipeline-scroll{overflow-x:auto;padding-bottom:6px}
+  .pipeline{display:flex;align-items:stretch;gap:0;min-width:760px}
+  .phase{
+    flex:1;background:var(--card);border:1px solid var(--mist);border-radius:6px;
+    padding:16px 14px;text-align:center;position:relative;
+  }
+  .phase + .phase{margin-left:34px}
+  .phase + .phase::before{
+    content:"→";position:absolute;left:-27px;top:50%;transform:translateY(-50%);
+    color:var(--ink-3);font-size:19px;
+  }
+  .phase .en{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .phase .plname{font-size:16px;font-weight:680;margin-top:4px}
+  .phase .note{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.45}
+  .phase.hot{border-color:var(--spruce);background:var(--spruce-wash)}
+  .phase.hot .note{color:var(--spruce-deep);font-weight:600}
+  .gates{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .gate{font-family:var(--mono);font-size:12.5px;background:var(--card);border:1px dashed var(--ink-3);border-radius:99px;padding:4px 14px;color:var(--ink-2)}
+  .gate b{color:var(--ink);font-weight:650}
+  .pipeline-cap{margin-top:16px;font-size:14.5px;color:var(--ink-2);max-width:74ch}
+
+  /* ── pod diagram ── */
+  .pod-wrap{background:var(--card);border:1px solid var(--mist);border-radius:6px;padding:28px 28px 22px}
+  .pod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 14px;position:relative}
+  .dept-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);text-align:center;padding-bottom:4px}
+  .cell{
+    border:1px solid var(--mist);border-radius:5px;min-height:44px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;color:var(--ink-3);background:var(--paper);
+  }
+  .pod-band{
+    grid-column:1/-1;grid-row:3;margin:-5px -12px;border-radius:8px;
+    background:var(--amber-wash);border:1.5px solid var(--amber);
+  }
+  .pod-grid .cell.pod{
+    grid-row:3;z-index:1;background:var(--card);border-color:var(--amber);
+    color:var(--ink);font-weight:620;font-size:13.5px;text-align:center;line-height:1.3;padding:6px 4px;
+  }
+  .pod-grid .cell.pod.c1{grid-column:1}
+  .pod-grid .cell.pod.c2{grid-column:2}
+  .pod-grid .cell.pod.c3{grid-column:3}
+  .pod-grid .cell.pod.c4{grid-column:4}
+  .pod-label{
+    grid-column:1/-1;grid-row:4;text-align:right;padding:10px 2px 0;
+    font-family:var(--mono);font-size:12.5px;color:var(--amber-deep);letter-spacing:.05em;
+  }
+  .pod-cap{margin-top:18px;font-size:14.5px;color:var(--ink-2);max-width:74ch}
+  .pod-cap b{color:var(--ink)}
+
+  /* ── mapping Shopify → Selsey ── */
+  .map{display:flex;flex-direction:column;gap:14px}
+  .map-row{
+    display:grid;grid-template-columns:1fr 34px 1fr;gap:0;align-items:stretch;
+  }
+  .map-row .from,.map-row .to{background:var(--card);border:1px solid var(--mist);border-radius:6px;padding:20px 24px}
+  .map-row .from{border-left:4px solid var(--spruce)}
+  .map-row .to{border-left:4px solid var(--amber)}
+  .map-row .arr{display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:18px}
+  .map-row h3{font-size:16px;font-weight:680;letter-spacing:-.01em}
+  .map-row p{margin-top:6px;font-size:14.5px;color:var(--ink-2)}
+  .who{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:8px}
+  .from .who{color:var(--spruce)}
+  .to .who{color:var(--amber-deep)}
+  .blok{
+    display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11.5px;
+    border:1px solid var(--amber);color:var(--amber-deep);border-radius:99px;padding:2px 12px;letter-spacing:.06em;
+  }
+
+  /* ── sequencing ladder ── */
+  .ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;counter-reset:step}
+  .step{background:var(--card);border:1px solid var(--mist);border-radius:6px;padding:20px 22px;position:relative}
+  .step::before{
+    counter-increment:step;content:counter(step);
+    font-family:var(--mono);font-weight:700;font-size:14px;
+    display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;
+    background:var(--spruce-wash);color:var(--spruce-deep);border-radius:50%;margin-bottom:12px;
+  }
+  .step h3{font-size:16px;font-weight:680}
+  .step p{margin-top:6px;font-size:14px;color:var(--ink-2)}
+  .ladder-cap{margin-top:16px;font-size:14.5px;color:var(--ink-2);max-width:74ch}
+  .ladder-cap b{color:var(--ink)}
+
+  /* ── caveat ── */
+  .caveat{
+    border:1px solid var(--mist);border-left:4px solid var(--ink-3);
+    background:var(--card);border-radius:6px;padding:24px 28px;
+  }
+  .caveat h2{font-size:18px;font-weight:700;margin-bottom:10px}
+  .caveat ul{list-style:none}
+  .caveat li{padding:6px 0 6px 22px;position:relative;font-size:15px;color:var(--ink-2)}
+  .caveat li::before{content:"—";position:absolute;left:0;color:var(--ink-3)}
+  .caveat li b{color:var(--ink)}
+
+  footer{margin-top:84px;border-top:1px solid var(--mist);padding-top:24px}
+  footer .eyebrow{display:block;margin-bottom:12px}
+  footer ul{list-style:none;columns:2;column-gap:40px}
+  footer li{font-size:13.5px;padding:3px 0;break-inside:avoid}
+  footer .fin{margin-top:26px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+
+  @media (max-width:720px){
+    .sec-head{flex-direction:column;gap:4px}
+    .sec-head .eyebrow{margin-left:0;text-align:left}
+    .map-row{grid-template-columns:1fr}
+    .map-row .arr{transform:rotate(90deg);padding:2px 0}
+    .pod-grid{grid-template-columns:repeat(2,1fr)}
+    .pod-band{display:none}
+    .pod-grid .cell.pod{grid-row:auto;background:var(--amber-wash)}
+    .pod-grid .cell.pod.c1,.pod-grid .cell.pod.c2,
+    .pod-grid .cell.pod.c3,.pod-grid .cell.pod.c4{grid-column:auto}
+    .pod-label{grid-row:auto;text-align:left}
+    footer ul{columns:1}
+  }
+  @media print{
+    body{background:#fff;color:#111}
+    .stat .num{color:#0B5C3D}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <span class="eyebrow">Studium przypadku · Warsztaty AI Selsey · 22–23.07.2026</span>
+  <h1>Shopify: AI jako <em>domyślny sposób pracy</em></h1>
+  <p class="lede">Najlepiej udokumentowany przypadek adopcji AI w całej organizacji — nie w jednym
+  dziale IT. Istotny dla Selsey podwójnie: <strong>to platforma, na której sprzedajecie</strong>
+  (Shopify DE, Shopify PL), a mechanizmy, które wdrożyli, odpowiadają wprost na pytania
+  z agendy tego warsztatu — właściciele, priorytety, model dostarczania, model operacyjny.</p>
+</header>
+
+<!-- ══ 1. MEMO ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Memo, które ustawiło firmę</h2>
+    <span class="eyebrow">kwiecień 2025 · opublikowane przez CEO</span>
+  </div>
+
+  <div class="memo">
+    <div class="meta">
+      <b>OD:</b> Tobi Lütke, CEO<br>
+      <b>DO:</b> wszyscy pracownicy Shopify (~8 000 osób)<br>
+      <b>STATUS:</b> memo wewnętrzne — po wycieku opublikowane publicznie przez autora
+    </div>
+    <blockquote>
+      &bdquo;Reflexive AI usage is now a baseline expectation at Shopify.&rdquo;
+      <span class="pl">Odruchowe sięganie po AI jest od teraz podstawowym oczekiwaniem wobec każdego —
+      od stażysty po zarząd. AI jako partner do myślenia, researcher, krytyk, tutor, pair-programmer.</span>
+    </blockquote>
+  </div>
+  <p class="memo-note">Memo nie było początkiem — było postawieniem kropki. Infrastruktura i narzędzia
+  istniały wcześniej; memo zamieniło &bdquo;możesz&rdquo; na &bdquo;oczekujemy&rdquo;.</p>
+
+  <div class="rules">
+    <div class="rule">
+      <span class="tag">Reguła nr 1</span>
+      <h3>Etat dopiero po AI</h3>
+      <p>Zanim zespół poprosi o dodatkowy etat lub zasoby, musi <b>wykazać, dlaczego AI nie jest
+      w stanie wykonać tej pracy</b>. Wniosek o headcount = dowód, że próbowano.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Reguła nr 2</span>
+      <h3>Pytanie menedżera</h3>
+      <p>Każdy menedżer ma sobie zadawać pytanie: <b>&bdquo;jak wyglądałby mój obszar, gdyby autonomiczne
+      agenty AI już były częścią zespołu?&rdquo;</b> — i projektować pracę od tej odpowiedzi.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Reguła nr 3</span>
+      <h3>AI w ocenach okresowych</h3>
+      <p>Użycie AI weszło formalnie do <b>ocen okresowych i feedbacku 360°</b> jako kompetencja
+      &bdquo;AI-reflexive&rdquo;. Dane z narzędzi pokazały dodatnią korelację użycia AI z oceną wpływu.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Reguła nr 4</span>
+      <h3>Prototyp = eksploracja AI</h3>
+      <p>Faza prototypu <b>każdego</b> projektu produktowego ma być &bdquo;zdominowana przez eksplorację
+      AI&rdquo; — najpierw sprawdzamy, ile zrobi model, potem planujemy pracę ludzi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2. LICZBY ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Skala w liczbach</h2>
+    <span class="eyebrow">dane publiczne 2025–2026</span>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="num">3&nbsp;000</div>
+      <div class="lbl">licencji Cursor</div>
+      <div class="ctx">1 500 kupione na start, kolejne 1 500 od ręki. Najszybciej rosnące grupy
+      użytkowników: <b>support i sprzedaż</b>, nie inżynieria.</div>
+    </div>
+    <div class="stat">
+      <div class="num">100×</div>
+      <div class="lbl">szybsze tłumaczenia</div>
+      <div class="ctx">Przykład z memo CEO — pierwszy proces, w którym AI zmieniło koszt
+      o rzędy wielkości, nie o procenty.</div>
+    </div>
+    <div class="stat">
+      <div class="num">25&nbsp;→&nbsp;1&nbsp;000</div>
+      <div class="lbl">stażystów</div>
+      <div class="ctx">Po pilotażu 25 stażystów cel podniesiono do 1 000. Juniorzy używają AI
+      najnaturalniej — zamiast ciąć młodych, zatrudniają więcej.</div>
+    </div>
+    <div class="stat">
+      <div class="num">0</div>
+      <div class="lbl">limitów wydatków na AI</div>
+      <div class="ctx">Zamiast limitu — ranking zużycia tokenów, używany do znajdowania
+      liderów adopcji, nie do pilnowania kosztów. Rachunek: +10% produktywności
+      uzasadnia 1–10 tys. USD/mc na inżyniera.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. MASZYNERIA ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Maszyneria: co zbudowali, zanim zaczęli wymagać</h2>
+    <span class="eyebrow">warstwa horyzontalna</span>
+  </div>
+  <div class="infra">
+    <div>
+      <h3>Wewnętrzny LLM proxy</h3>
+      <p>Jedna bramka do wielu modeli (chat.shopify.io + Proxy). Zespół platformowy utrzymuje ją,
+      monitoruje jakość modeli i podmienia je centralnie — użytkownik nic nie konfiguruje.</p>
+    </div>
+    <div>
+      <h3>MCP do systemów firmowych</h3>
+      <p>Wszystkie kluczowe systemy (GSuite, Slack, Salesforce…) podpięte przez serwery MCP —
+      agent może realnie działać na danych firmy, nie tylko gadać.</p>
+    </div>
+    <div>
+      <h3>Biblioteka agentów i promptów</h3>
+      <p>Działające workflow są pakowane i współdzielone — pracownik zaczyna od sprawdzonego
+      wzorca, nie od pustej kartki.</p>
+    </div>
+    <div>
+      <h3>Dostęp dla wszystkich, nie tylko dev</h3>
+      <p>Drogie modele rozdane całej firmie. Efekt: sprzedawcy sami zbudowali generator audytów
+      stron, zespół revenue — agenta RFP uczącego się z wygranych ofert.</p>
+    </div>
+    <div>
+      <h3>Prawnicy od pierwszego dnia</h3>
+      <p>Rozmowa zaczęła się od &bdquo;zrobimy to — jak zrobić to bezpiecznie?&rdquo;, nie od pytania
+      o zgodę. Dział prawny został partnerem, nie bramkarzem.</p>
+    </div>
+    <div>
+      <h3>&bdquo;Process power&rdquo;</h3>
+      <p>Nie przyspieszają istniejącego procesu — przeprojektowują go, gdy któryś krok staje się
+      darmowy. Gdy audyt strony kosztuje zero, cały lejek sprzedaży układa się na nowo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4. MODEL OPERACYJNY ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Model operacyjny: małe zespoły od wyniku + GSD</h2>
+    <span class="eyebrow">jak prowadzą projekty</span>
+  </div>
+
+  <p style="max-width:74ch;color:var(--ink-2);margin-bottom:26px">Shopify nie prowadzi projektów
+  w strukturze działowej. Praca dzieje się w <b style="color:var(--ink)">małych zespołach
+  misyjnych</b> — każdy ma jasno zdefiniowany problem biznesowy i własność wyniku — a przez
+  wspólny proces <b style="color:var(--ink)">GSD (&bdquo;Get Shit Done&rdquo;)</b> przechodzi każdy
+  projekt w firmie:</p>
+
+  <div class="pipeline-scroll">
+    <div class="pipeline">
+      <div class="phase">
+        <div class="en">Proposal</div>
+        <div class="plname">Propozycja</div>
+        <div class="note">problem + oczekiwany wynik</div>
+      </div>
+      <div class="phase hot">
+        <div class="en">Prototype</div>
+        <div class="plname">Prototyp</div>
+        <div class="note">zdominowany przez eksplorację AI</div>
+      </div>
+      <div class="phase">
+        <div class="en">Build</div>
+        <div class="plname">Budowa</div>
+        <div class="note">dopiero po dowodzie z prototypu</div>
+      </div>
+      <div class="phase">
+        <div class="en">Release</div>
+        <div class="plname">Wydanie</div>
+        <div class="note">do użytkowników, z bramką</div>
+      </div>
+      <div class="phase">
+        <div class="en">Results</div>
+        <div class="plname">Wyniki</div>
+        <div class="note">zmierzony efekt — faza obowiązkowa</div>
+      </div>
+    </div>
+  </div>
+  <div class="gates">
+    <span class="gate"><b>OK1</b> — przegląd dyrektorów (produkt, UX, eng, dane) · asynchronicznie</span>
+    <span class="gate"><b>OK2</b> — senior leadership · spotkanie tylko przy realnym sporze</span>
+  </div>
+  <p class="pipeline-cap">Do tego higiena czasu: wycięli wszystkie cykliczne spotkania, a przy każdym
+  zaproszeniu widać, ile to spotkanie kosztuje. Przeglądy są domyślnie asynchroniczne.
+  Zwróćcie uwagę na ostatnią fazę — <b style="color:var(--ink)">Results</b>: projekt nie kończy się
+  wydaniem, tylko zmierzonym wynikiem. To jest dokładnie zasada tego warsztatu:
+  blok bez rezultatu uznajemy za niedokończony.</p>
+</section>
+
+<!-- ══ 5. POD ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Pod: mały zespół od wyniku, w poprzek działów</h2>
+    <span class="eyebrow">to nie jest reorganizacja</span>
+  </div>
+
+  <div class="pod-wrap">
+    <div class="pod-grid">
+      <div class="dept-h">Sprzedaż / MP</div>
+      <div class="dept-h">Content</div>
+      <div class="dept-h">Finanse / dane</div>
+      <div class="dept-h">IT / Dev</div>
+
+      <div class="cell">praca bieżąca</div>
+      <div class="cell">praca bieżąca</div>
+      <div class="cell">praca bieżąca</div>
+      <div class="cell">praca bieżąca</div>
+
+      <div class="pod-band" aria-hidden="true"></div>
+      <div class="cell pod c1">właściciel procesu</div>
+      <div class="cell pod c2">znawca treści / ofert</div>
+      <div class="cell pod c3">dostęp do danych m3</div>
+      <div class="cell pod c4">1 builder AI</div>
+
+      <div class="pod-label">← pod pętli (np. pętla marży) — 3–4 osoby, jeden mierzalny wynik</div>
+
+      <div class="cell">praca bieżąca</div>
+      <div class="cell">praca bieżąca</div>
+      <div class="cell">praca bieżąca</div>
+      <div class="cell">praca bieżąca</div>
+    </div>
+    <p class="pod-cap"><b>Działy zostają, jak są.</b> Pod to sposób prowadzenia projektu, nie zmiana
+    struktury: 3–4 osoby z różnych działów, jeden jasno nazwany wynik (pętla z Selsey OS), właściciel,
+    termin i chroniony czas. Pętle Selsey OS <b>już są podami z definicji</b> — pętla marży potrzebuje
+    sprzedaży, danych i IT jednocześnie; żaden pojedynczy dział jej nie dowiezie. Dotychczasowe
+    inicjatywy stawały właśnie dlatego, że &bdquo;wspólna odpowiedzialność&rdquo; działów okazywała
+    się niczyja, a czas na pracę platformową przegrywał z bieżączką.</p>
+  </div>
+</section>
+
+<!-- ══ 6. MAPOWANIE NA SELSEY ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Co z tego dla Selsey</h2>
+    <span class="eyebrow">mechanizm → zastosowanie → blok agendy</span>
+  </div>
+
+  <div class="map">
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>Małe zespoły misyjne + GSD</h3>
+        <p>Projekt = zespół od wyniku z fazami i bramkami, nie zadanie działu.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>Pod na pierwszą pętlę — pilot 90 dni</h3>
+        <p>Nie reorganizacja: pętla wybrana w bloku 3 dostaje pod (3–4 osoby, właściciel,
+        chroniony czas, mierzalny wynik). Model operacyjny oceniamy po wynikach pilota,
+        nie w dyskusji.</p>
+        <span class="blok">Blok 2–3 + Blok 6</span>
+      </div>
+    </div>
+
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>&bdquo;Etat dopiero po AI&rdquo;</h3>
+        <p>Wniosek o headcount wymaga wykazania, że AI tej pracy nie wykona.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>To samo pytanie przy każdym wakacie i wniosku</h3>
+        <p>Jedna reguła, zero kosztu wdrożenia, natychmiastowy efekt kulturowy. Kryterium
+        agent / no-code / kod / praca ręczna stosowane też do etatów — zanim rekrutacja,
+        próba z AI.</p>
+        <span class="blok">Blok 6 · model operacyjny</span>
+      </div>
+    </div>
+
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>LLM proxy + MCP + biblioteka agentów</h3>
+        <p>Warstwa wspólna budowana raz, utrzymywana przez nazwany zespół.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>To jest opis roli AI Platform Lead</h3>
+        <p>Macie już elementy (MCP do ClickUp i Odoo, 40 licencji Claude, licencje Gemini).
+        Brakuje właściciela, który złoży z tego platformę: wspólne integracje, walidatory,
+        bibliotekę skilli — zamiast dublowania w każdym projekcie.</p>
+        <span class="blok">Blok 2 · warstwa horyzontalna</span>
+      </div>
+    </div>
+
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>Prototyp zdominowany przez AI</h3>
+        <p>Każdy projekt zaczyna od sprawdzenia, ile zrobi model.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>Faza prototypu w każdym projekcie z listy priorytetów</h3>
+        <p>Dla 2–3 wybranych pętli/procesów: najpierw tygodniowy prototyp z AI, dopiero potem
+        decyzja o budowie. Tanio odsiewa pomysły, które wyglądają dobrze tylko na tablicy.</p>
+        <span class="blok">Blok 3 · priorytety</span>
+      </div>
+    </div>
+
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>Dostęp dla nietechnicznych + biblioteka wzorców</h3>
+        <p>Najszybsza adopcja poza IT; sprzedaż buduje własne narzędzia.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>Kanał dystrybucji z dnia 2 + Akademia AI z właścicielem</h3>
+        <p>Wzorzec przygotowany → zweryfikowany → udostępniony (Agent produktowy jako pierwszy
+        przypadek) plus biblioteka sprawdzonych skilli, z której korzysta content, BOK i sprzedaż.</p>
+        <span class="blok">Blok 4–5 · dostarczanie</span>
+      </div>
+    </div>
+
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>AI w ocenach okresowych</h3>
+        <p>Kompetencja &bdquo;AI-reflexive&rdquo; w przeglądach 360°.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>Tak — ale jako krok 4, nie krok 1</h3>
+        <p>Shopify najpierw dało narzędzia i wzorce, potem postawiło oczekiwanie, na końcu wpięło
+        je w oceny. U Selsey przed tym krokiem stoją: polityka użycia AI (dziś niespisana)
+        i Akademia AI z realnym budżetem czasu. Wymaganie przed umożliwieniem = opór.</p>
+        <span class="blok">Blok 4 · polityka + Akademia</span>
+      </div>
+    </div>
+
+    <div class="map-row">
+      <div class="from">
+        <span class="who">Shopify</span>
+        <h3>Prawnicy: &bdquo;jak bezpiecznie&rdquo;, nie &bdquo;czy wolno&rdquo;</h3>
+        <p>Zgodność jako współprojektant, nie hamulcowy.</p>
+      </div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="to">
+        <span class="who">u Selsey</span>
+        <h3>Polityka AI pisana z tym nastawieniem</h3>
+        <p>Jedna strona: co wolno, czego nie, gdzie dane wrażliwe — zamiast zakazu, który i tak
+        wszyscy obchodzą. Dziś jedyna zasada to zakaz danych osobowych w narzędziach publicznych.</p>
+        <span class="blok">Blok 4 · polityka użycia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7. SEKWENCJA ══ -->
+<section>
+  <div class="sec-head">
+    <h2>Kolejność ma znaczenie</h2>
+    <span class="eyebrow">jak Shopify to sekwencjonowało</span>
+  </div>
+  <div class="ladder">
+    <div class="step">
+      <h3>Dostęp i infrastruktura</h3>
+      <p>Licencje dla wszystkich, proxy, MCP, brak limitów. Najpierw umożliwić.</p>
+    </div>
+    <div class="step">
+      <h3>Nawyk i wzorce</h3>
+      <p>Biblioteka agentów i promptów, wewnętrzne pokazy, liderzy adopcji widoczni w rankingu.</p>
+    </div>
+    <div class="step">
+      <h3>Oczekiwanie</h3>
+      <p>Dopiero teraz memo: używanie AI to warunek podstawowy, etat dopiero po AI.</p>
+    </div>
+    <div class="step">
+      <h3>Ocena</h3>
+      <p>Kompetencja AI-reflexive w przeglądach okresowych i feedbacku 360°.</p>
+    </div>
+  </div>
+  <p class="ladder-cap">To jest ta sama logika co zasada <b>&bdquo;autonomia jest zdobywana,
+  nie nadawana&rdquo;</b> z Selsey OS — tyle że zastosowana do ludzi, nie do agentów.
+  Wymaganie (krok 3–4) postawione przed umożliwieniem (krok 1–2) daje opór zamiast adopcji.</p>
+</section>
+
+<!-- ══ 8. ZASTRZEŻENIA ══ -->
+<section>
+  <div class="caveat">
+    <h2>Czego nie kopiować 1:1</h2>
+    <ul>
+      <li><b>Skala:</b> Shopify to ~8 000 osób i firma czysto software'owa. Selsey to 115 osób,
+      meble, magazyn i produkcja — kopiujemy mechanizmy, nie budżety.</li>
+      <li><b>Brak limitów wydatków</b> ma sens przy marżach software'u. U Selsey wystarczy zasada
+      &bdquo;mierzymy zużycie, nie blokujemy&rdquo; w ramach istniejących licencji.</li>
+      <li><b>AI w ocenach okresowych</b> — dopiero po polityce użycia i Akademii AI (patrz sekwencja).</li>
+      <li><b>1 000 stażystów</b> to nie liczba do skopiowania — do zapamiętania jest kierunek:
+      juniorzy z AI to dźwignia, nie koszt.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <span class="eyebrow">Źródła (publiczne)</span>
+  <ul>
+    <li><a href="https://x.com/tobi/status/1909251946235437514">Memo Tobiego Lütke (X, 7.04.2025)</a></li>
+    <li><a href="https://www.firstround.com/ai/shopify">First Round — From Memo to Movement: Shopify's Cultural Adoption of AI</a></li>
+    <li><a href="https://www.bvp.com/atlas/inside-shopifys-ai-first-engineering-playbook">Bessemer — Inside Shopify's AI-first engineering playbook</a></li>
+    <li><a href="https://www.lennysnewsletter.com/p/how-shopify-builds-product">Lenny Rachitsky — How Shopify builds product (GSD, OK1/OK2)</a></li>
+    <li><a href="https://shopify.engineering/how-shopify-scales-up-its-development-teams">Shopify Engineering — How Shopify Scales Up Its Development Teams</a></li>
+    <li><a href="https://slator.com/in-internal-memo-shopify-ceo-says-ai-has-already-sped-up-translations-100x/">Slator — tłumaczenia 100× (z memo)</a></li>
+    <li><a href="https://www.forrester.com/blogs/what-you-can-learn-from-shopifys-ceos-memo-on-workforce-ai/">Forrester — What You Can Learn From Shopify's CEO's Memo</a></li>
+  </ul>
+  <p class="fin">Przygotował: Andrzej Lipka · materiał na warsztaty AI Selsey, 22–23.07.2026 ·
+  wersja 1.0 (16.07.2026)</p>
+</footer>
+
+</main>
+</body>
+</html>
